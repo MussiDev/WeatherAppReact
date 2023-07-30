@@ -1,19 +1,20 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 
+import ResultSearch from "../entities/api/ResultSearch";
 import axios from "axios";
 
 const HomePage = () => {
 	const [search, setSearch] = useState<string>("");
-	const [searchResult, setSearchResult] = useState<[] | null>(null);
+	const [searchResult, setSearchResult] = useState<ResultSearch | null>(null);
+
 	const fetchWeatherData = async () => {
 		try {
-			const response = await axios.get(
+			const response: ResultSearch = await axios.get(
 				`https://api.weatherapi.com/v1/current.json?key=${
 					import.meta.env.VITE_WEATHER_API
 				}&q=${search}`
 			);
-			console.log(searchResult);
-			setSearchResult(response.data);
+			setSearchResult(response);
 		} catch (error) {
 			console.log(error);
 			setSearchResult(null);
