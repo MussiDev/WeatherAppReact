@@ -1,7 +1,8 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useState } from "react";
+import axios, { AxiosResponse } from "axios";
 
 import ResultSearch from "../entities/api/ResultSearch";
-import axios from "axios";
+import SearchBar from "./common/SearchBar";
 
 const HomePage = () => {
 	const [search, setSearch] = useState<string>("");
@@ -9,33 +10,29 @@ const HomePage = () => {
 
 	const fetchWeatherData = async () => {
 		try {
-			const response: ResultSearch = await axios.get(
+			const response: AxiosResponse<any, any> = await axios.get(
 				`https://api.weatherapi.com/v1/current.json?key=${
 					import.meta.env.VITE_WEATHER_API
 				}&q=${search}`
 			);
-			setSearchResult(response);
+			setSearchResult(response.data);
 		} catch (error) {
 			console.log(error);
 			setSearchResult(null);
 		}
 	};
 
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		e.preventDefault();
-		setSearch(e.target.value);
-	};
-
 	return (
 		<div>
 			<h1>Busqueda</h1>
-			<input
-				type='text'
-				placeholder='Search here'
-				onChange={handleChange}
-				value={search}
+			<SearchBar
+				data={{ search }}
+				events={{ onClick: fetchWeatherData, setSearch }}
 			/>
-			<input type='submit' onClick={fetchWeatherData} />
+			<div>
+				<p>clouds:</p>
+				{searchResult?.current?.cloud}
+			</div>
 		</div>
 	);
 };
