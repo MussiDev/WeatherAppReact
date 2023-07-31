@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 import ResultSearch from "../../entities/api/ResultSearch";
-import SearchBar from "../common/SearchBar";
+import SearchBar from "../common/SearchBar/SearchBar";
 import { Section } from "./HomePage.styled";
 import { useState } from "react";
 

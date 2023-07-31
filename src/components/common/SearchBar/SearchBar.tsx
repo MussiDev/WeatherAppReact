@@ -1,5 +1,8 @@
 import React, { ChangeEvent, MouseEventHandler } from "react";
 
+import Button from "../Button/Button";
+import { Section } from "./SearchBar.styled";
+
 interface SearchBarProps {
 	data: {
 		search: string;
@@ -20,15 +23,15 @@ const SearchBar = (props: SearchBarProps) => {
 		setSearch(data.target.value);
 	};
 	return (
-		<div>
+		<Section>
 			<input
 				type='text'
-				placeholder='Search here'
+				placeholder='Enter the city name here'
 				onChange={handleChange}
 				value={search}
 			/>
-			<input type='submit' onClick={onClick} />
-		</div>
+			<Button data={{ text: "Buscar" }} events={{ handleSubmit: onClick }} />
+		</Section>
 	);
 };
 
